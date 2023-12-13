@@ -30,5 +30,5 @@ const UserSchema = new Schema({
 
 export const ItemModel =
   mongoose.models.Item || mongoose.model('Item', ItemSchema);
-export const UserMode =
+export const UserModel =
   mongoose.models.User || mongoose.model('User', UserSchema);
