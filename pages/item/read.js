@@ -1,0 +1,1 @@
+// pages/item/read.js
