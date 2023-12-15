@@ -1,11 +1,38 @@
 // pages/index.js
+import Link from 'next/link';
+import Image from 'next/image';
 
-const ReadAllItems = () => {
+const ReadAllItems = (props) => {
   return (
     <div>
-      <h1 className="h1-style">...</h1>
+      <div>
+        {props.allItems.map((item) => (
+          <Link href={`/item/${item._id}`} key={item._id}>
+            <Image
+              src={item.image}
+              width={750}
+              height={500}
+              priority={true}
+              alt="item-image"
+            />
+            <div>
+              <h2>￥{Number(item.price).toLocaleString()}</h2>
+              <h3>{item.title}</h3>
+              <p>{item.description.substring(0, 80)}...</p>
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 };
 
 export default ReadAllItems;
+
+export const getServerSideProps = async () => {
+  const resp = await fetch('http://localhost:3000/api/item/readall');
+  const allItems = await resp.json();
+  return {
+    props: allItems,
+  };
+};
