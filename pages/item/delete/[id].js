@@ -1,5 +1,6 @@
 // pages/item/delete/delete.js
 
+import useAuth from '@/utils/useAuth';
 import Image from 'next/image';
 
 const DeleteItem = (props) => {
@@ -23,24 +24,29 @@ const DeleteItem = (props) => {
       alert('アイテム削除失敗');
     }
   };
-  return (
-    <div>
-      <h1>アイテム削除</h1>
-      <form onSubmit={handleSubmit}>
-        <h2>{props.singleItem.title}</h2>
-        <Image
-          src={props.singleItem.image}
-          width={750}
-          height={500}
-          priority={true}
-          alt="item-image"
-        />
-        <h3>￥{Number(props.singleItem.price).toLocaleString()}</h3>
-        <p>{props.singleItem.description}</p>
-        <button>削除</button>
-      </form>
-    </div>
-  );
+  const loginUser = useAuth();
+  if (loginUser !== props.singleItem.email) {
+    return <h1>権限がありません</h1>;
+  } else {
+    return (
+      <div>
+        <h1>アイテム削除</h1>
+        <form onSubmit={handleSubmit}>
+          <h2>{props.singleItem.title}</h2>
+          <Image
+            src={props.singleItem.image}
+            width={750}
+            height={500}
+            priority={true}
+            alt="item-image"
+          />
+          <h3>￥{Number(props.singleItem.price).toLocaleString()}</h3>
+          <p>{props.singleItem.description}</p>
+          <button>削除</button>
+        </form>
+      </div>
+    );
+  }
 };
 
 export default DeleteItem;
