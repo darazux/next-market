@@ -1,6 +1,7 @@
 // pages/item/delete/delete.js
 
 import useAuth from '@/utils/useAuth';
+import Head from 'next/head';
 import Image from 'next/image';
 
 const DeleteItem = (props) => {
@@ -29,8 +30,11 @@ const DeleteItem = (props) => {
     return <h1>権限がありません</h1>;
   } else {
     return (
-      <div>
-        <h1>アイテム削除</h1>
+      <div className="delete-page">
+        <Head>
+          <title>アイテム削除</title>
+        </Head>
+        <h1 className="page-title">アイテム削除</h1>
         <form onSubmit={handleSubmit}>
           <h2>{props.singleItem.title}</h2>
           <Image

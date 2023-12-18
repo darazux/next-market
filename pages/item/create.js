@@ -1,6 +1,7 @@
 // pages/item/create.js
 
 import useAuth from '@/utils/useAuth';
+import Head from 'next/head';
 import { useState } from 'react';
 
 const CreateItem = () => {
@@ -36,7 +37,10 @@ const CreateItem = () => {
   if (loginUser) {
     return (
       <div>
-        <h1>アイテム作成</h1>
+        <Head>
+          <title>アイテム作成</title>
+        </Head>
+        <h1 className="page-titile">アイテム作成</h1>
         <form onSubmit={handleSubmit}>
           <input
             value={title}

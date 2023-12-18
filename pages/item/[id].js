@@ -1,10 +1,14 @@
 // pages/item/read.js
 
+import Head from 'next/head';
 import Image from 'next/image';
 
 const ReadSingleItem = (props) => {
   return (
-    <div>
+    <div className="grid-container-in">
+      <Head>
+        <title>{props.singleItem.title}</title>
+      </Head>
       <div>
         <Image
           src={props.singleItem.image}
