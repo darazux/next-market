@@ -38,7 +38,7 @@ const ReadSingleItem = (props) => {
 export default ReadSingleItem;
 
 export const getServerSideProps = async (ctx) => {
-  const url = getUrl({ req: ctx.req });
+  const url = await getUrl({ req: ctx.req });
   const resp = await fetch(`${url.origin}/api/item/${ctx.query.id}`);
   const singleItem = await resp.json();
   return {
