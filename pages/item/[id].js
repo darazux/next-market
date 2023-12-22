@@ -3,6 +3,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getUrl } from 'nextjs-current-url/server';
 
 const ReadSingleItem = (props) => {
   const id = props.singleItem._id;
@@ -37,7 +38,8 @@ const ReadSingleItem = (props) => {
 export default ReadSingleItem;
 
 export const getServerSideProps = async (ctx) => {
-  const resp = await fetch(`http://localhost:3000/api/item/${ctx.query.id}`);
+  const url = getUrl({ req: ctx.req });
+  const resp = await fetch(`${url.origin}/api/item/${ctx.query.id}`);
   const singleItem = await resp.json();
   return {
     props: singleItem,

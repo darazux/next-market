@@ -3,18 +3,21 @@
 import useAuth from '@/utils/useAuth';
 import Head from 'next/head';
 import { useState } from 'react';
+import { getUrl } from 'nextjs-current-url/server';
+import { useUrl } from 'nextjs-current-url';
 
 const UpdateItem = (props) => {
   const [title, setTitle] = useState(props.singleItem.title);
   const [price, setPrice] = useState(props.singleItem.price);
   const [image, setImage] = useState(props.singleItem.image);
   const [description, setDescription] = useState(props.singleItem.description);
+  const { origin } = useUrl() ?? {};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const resp = await fetch(
-        `http://localhost:3000/api/item/update/${props.singleItem._id}`,
+        `${origin}/api/item/update/${props.singleItem._id}`,
         {
           method: 'POST',
           headers: {
@@ -89,7 +92,8 @@ const UpdateItem = (props) => {
 export default UpdateItem;
 
 export const getServerSideProps = async (ctx) => {
-  const resp = await fetch(`http://localhost:3000/api/item/${ctx.query.id}`);
+  const url = getUrl({ req: ctx.req });
+  const resp = await fetch(`${url.origin}/api/item/${ctx.query.id}`);
   const singleItem = await resp.json();
 
   return {

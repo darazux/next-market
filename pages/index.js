@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import Head from 'next/head';
+import { getUrl } from 'nextjs-current-url/server';
 
 const ReadAllItems = (props) => {
   return (
@@ -33,8 +34,9 @@ const ReadAllItems = (props) => {
 
 export default ReadAllItems;
 
-export const getServerSideProps = async () => {
-  const resp = await fetch('http://localhost:3000/api/item/readall');
+export const getServerSideProps = async (ctx) => {
+  const url = getUrl({ req: ctx.req });
+  const resp = await fetch(`${url.origin}/api/item/readall`);
   const allItems = await resp.json();
   return {
     props: allItems,

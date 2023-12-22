@@ -3,13 +3,16 @@
 import useAuth from '@/utils/useAuth';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useUrl } from 'nextjs-current-url';
+import { getUrl } from 'nextjs-current-url/server';
 
 const DeleteItem = (props) => {
+  const { origin } = useUrl() ?? {};
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const resp = await fetch(
-        `http://localhost:3000/api/item/delete/${props.singleItem._id}`,
+        `${origin}/api/item/delete/${props.singleItem._id}`,
         {
           method: 'POST',
           headers: {
@@ -41,7 +44,6 @@ const DeleteItem = (props) => {
             src={props.singleItem.image}
             width={750}
             height={500}
-            priority={true}
             alt="item-image"
           />
           <h3>￥{Number(props.singleItem.price).toLocaleString()}</h3>
@@ -56,7 +58,8 @@ const DeleteItem = (props) => {
 export default DeleteItem;
 
 export const getServerSideProps = async (ctx) => {
-  const resp = await fetch(`http://localhost:3000/api/item/${ctx.query.id}`);
+  const url = getUrl({ req: ctx.req });
+  const resp = await fetch(`${url.origin}/api/item/${ctx.query.id}`);
   const singleItem = await resp.json();
 
   return {

@@ -3,17 +3,19 @@
 import useAuth from '@/utils/useAuth';
 import Head from 'next/head';
 import { useState } from 'react';
+import { useUrl } from 'nextjs-current-url';
 
 const CreateItem = () => {
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
   const [description, setDescription] = useState('');
+  const { origin } = useUrl() ?? {};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const resp = await fetch('http://localhost:3000/api/item/create', {
+      const resp = await fetch(`${origin}/api/item/create`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',

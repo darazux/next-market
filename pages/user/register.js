@@ -2,15 +2,17 @@
 
 import Head from 'next/head';
 import { useState } from 'react';
+import { useUrl } from 'nextjs-current-url';
 
 const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { origin } = useUrl() ?? {};
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const resp = await fetch('http://localhost:3000/api/user/register', {
+      const resp = await fetch(`${origin}/api/user/register`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
