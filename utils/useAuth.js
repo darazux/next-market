@@ -1,26 +1,41 @@
 // utils/useAuth.js
 
 import { useRouter } from 'next/router';
-import jwt from 'jsonwebtoken';
 import { useEffect, useState } from 'react';
 
-const secret_key = 'nextamrket';
+const secret_key = 'nextmarket';
 
 const useAuth = () => {
   const [loginUser, setLoginUser] = useState('');
   const router = useRouter();
   useEffect(() => {
-    const token = localStorage.getItem('tokenn');
-    if (!token) {
-      router.push('/user/login');
-    }
-    try {
-      const decoded = jwt.verify(token, secret_key);
-      setLoinUser(decoded.email);
-    } catch (err) {
-      router.push('/user/login');
-    }
+    (async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.log('token is null');
+        router.push('/user/login');
+      }
+      try {
+        const origin = window.location.origin;
+        const resp = await fetch(`${origin}/api/user/verify-auth`, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            token: token,
+          }),
+        });
+        const jsonData = await resp.json();
+        setLoginUser(jsonData.email);
+      } catch (err) {
+        console.log(`[ERR] ${err}`);
+        router.push('/user/login');
+      }
+    })();
   }, [router]);
+  console.log(`loginUser: ${loginUser}`);
   return loginUser;
 };
 
