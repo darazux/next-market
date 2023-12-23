@@ -12,6 +12,7 @@
 # next.js
 /.next/
 /out/
+/config/local.json
 
 # production
 /build

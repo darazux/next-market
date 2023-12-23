@@ -3,7 +3,6 @@
 import useAuth from '@/utils/useAuth';
 import Head from 'next/head';
 import { useState } from 'react';
-import { getUrl } from 'nextjs-current-url/server';
 import { useUrl } from 'nextjs-current-url';
 
 const UpdateItem = (props) => {
@@ -92,8 +91,8 @@ const UpdateItem = (props) => {
 export default UpdateItem;
 
 export const getServerSideProps = async (ctx) => {
-  const url = await getUrl({ req: ctx.req });
-  const resp = await fetch(`${url.origin}/api/item/${ctx.query.id}`);
+  const origin = process.env.BASE_URL;
+  const resp = await fetch(`${origin}api/item/${ctx.query.id}`);
   const singleItem = await resp.json();
 
   return {

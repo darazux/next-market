@@ -16,8 +16,8 @@ const useAuth = () => {
         router.push('/user/login');
       }
       try {
-        const origin = window.location.origin;
-        const resp = await fetch(`${origin}/api/user/verify-auth`, {
+        const origin = process.env.BASE_URL;
+        const resp = await fetch(`${origin}api/user/verify-auth`, {
           method: 'POST',
           headers: {
             Accept: 'application/json',

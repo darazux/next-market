@@ -6,16 +6,15 @@ import { useEffect, useState } from 'react';
 
 const ReadAllItems = (props) => {
   const [itemData, setItemData] = useState('');
-
   useEffect(() => {
     const getAllData = async () => {
-      const origin = window.location.origin;
-      const resp = await fetch(`${origin}/api/item/readall`);
+      const origin = process.env.BASE_URL;
+      const resp = await fetch(`${origin}api/item/readall`);
       const allItems = await resp.json();
       setItemData(allItems);
     };
     getAllData();
-  }, [ReadAllItems]);
+  }, []);
 
   return (
     <div>

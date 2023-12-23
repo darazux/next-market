@@ -4,7 +4,6 @@ import useAuth from '@/utils/useAuth';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useUrl } from 'nextjs-current-url';
-import { getUrl } from 'nextjs-current-url/server';
 
 const DeleteItem = (props) => {
   const { origin } = useUrl() ?? {};
@@ -58,8 +57,8 @@ const DeleteItem = (props) => {
 export default DeleteItem;
 
 export const getServerSideProps = async (ctx) => {
-  const url = await getUrl({ req: ctx.req });
-  const resp = await fetch(`${url.origin}/api/item/${ctx.query.id}`);
+  const origin = process.env.BASE_URL;
+  const resp = await fetch(`${origin}api/item/${ctx.query.id}`);
   const singleItem = await resp.json();
 
   return {
