@@ -36,6 +36,7 @@ export default ReadAllItems;
 
 export const getServerSideProps = async (ctx) => {
   const url = await getUrl({ req: ctx.req });
+  console.log(url);
   const resp = await fetch(`${url.origin}/api/item/readall`);
   const allItems = await resp.json();
   return {
