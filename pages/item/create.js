@@ -4,6 +4,7 @@ import useAuth from '@/utils/useAuth';
 import Head from 'next/head';
 import { useState } from 'react';
 import { useUrl } from 'nextjs-current-url';
+import ImgInput from '@/components/imgInput';
 
 const CreateItem = () => {
   const [title, setTitle] = useState('');
@@ -43,6 +44,7 @@ const CreateItem = () => {
           <title>アイテム作成</title>
         </Head>
         <h1 className="page-titile">アイテム作成</h1>
+        <ImgInput setImage={setImage} />
         <form onSubmit={handleSubmit}>
           <input
             value={title}
