@@ -62,6 +62,14 @@ const CreateItem = () => {
             placeholder="価格"
             required
           />
+          <input
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+            type="text"
+            name="image"
+            placeholder="画像"
+            required
+          />
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
