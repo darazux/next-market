@@ -18,7 +18,7 @@ const ImgInput = (props) => {
         { method: 'POST', body: data },
       );
       const jsonData = await resp.json();
-      await props.setImage(jsonData.url);
+      await props.setImage(jsonData.secure_url);
       alert('画像アップロード成功');
     } catch (err) {
       alert('画像アップロード失敗');
